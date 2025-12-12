@@ -42,13 +42,10 @@ class WordGuesserApp < Sinatra::Base
     letter = params[:guess].to_s[0]
     ### YOUR CODE HERE ###
     begin
-      # use the game from the session (via before/after)
       valid = @game.guess(letter)
   
-      # repeated guess → guess returns false
       flash[:message] = "You have already used that letter." unless valid
     rescue ArgumentError
-      # invalid guess: empty, non-letter, nil, etc.
       flash[:message] = "Invalid guess."
     end
 
@@ -77,7 +74,6 @@ class WordGuesserApp < Sinatra::Base
     if @game.check_win_or_lose == :win
       erb :win
     else
-      # adjust message to match what cheating.feature expects
       flash[:message] = "No cheating!"
       redirect '/show'
     end
@@ -88,7 +84,6 @@ class WordGuesserApp < Sinatra::Base
     if @game.check_win_or_lose == :lose
       erb :lose
     else
-      # same message as in /win case
       flash[:message] = "No cheating!"
       redirect '/show'
     end
